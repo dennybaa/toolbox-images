@@ -1,11 +1,18 @@
 FROM docker.io/ubuntu:24.04
+ARG USER=dennybaa
+ARG UID=1000
+
 RUN apt-get update && \
     apt-get -y install zsh curl unzip libcap2-bin git sudo procps less \ 
                 neovim gpg lsb-release && \
     apt-get clean && \
     update-alternatives --set editor /usr/bin/nvim
 
-RUN sed -i -e 's/ ALL$/ NOPASSWD:ALL/' /etc/sudoers
+# Rename the default ubuntu user
+RUN usermod -l ${USER} $(id -un ${UID})
+RUN echo "#${UID} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers && cat /etc/sudoers
+
+
 ENV LANG=C.UTF-8
 
 ## An ugly workaround

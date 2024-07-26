@@ -9,4 +9,7 @@ ubuntu:
 golang:
     {{cbin}} build -t toolbox-golang:1.22 -f golang.containerfile
 
-all: ubuntu golang
+tools:
+    {{cbin}} build -t toolbox-tools -f tools.containerfile
+
+all: ubuntu golang tools
