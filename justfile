@@ -1,15 +1,16 @@
 cbin := "podman"
+args := if capitalize(env("NOCACHE", "")) =~ "(YES|Y)" { "--no-cache" } else { "" } 
 
 default:
     @just all
 
 ubuntu:
-    {{cbin}} build -t toolbox-ubuntu -f ubuntu.containerfile
+    {{cbin}} build {{args}} -t toolbox-ubuntu -f ubuntu.containerfile
 
 golang:
-    {{cbin}} build -t toolbox-golang:1.22 -f golang.containerfile
+    {{cbin}} build {{args}} -t toolbox-golang:1.22 -f golang.containerfile
 
 tools:
-    {{cbin}} build -t toolbox-tools -f tools.containerfile
+    {{cbin}} build {{args}} -t toolbox-tools -f tools.containerfile
 
 all: ubuntu golang tools

@@ -10,4 +10,6 @@ RUN apt-get -y install terraform vault git-crypt \
     && apt-get clean -y \
     && rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN curl -sSL https://kcl-lang.io/script/install-cli.sh | /bin/bash -s
+RUN \
+    # ref: https://github.com/kcl-lang/kcl/issues/1668
+    curl -sSL https://kcl-lang.io/script/install-cli.sh | /bin/bash -s -- 0.9.8
